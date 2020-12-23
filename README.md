@@ -1,4 +1,4 @@
-# dwmblocks
+# Custom build of dwmblocks
 
 Modular status monitor for dwm written in C with features including
 signaling, clickability, cursor hinting and color.
@@ -60,12 +60,12 @@ sudo make install clean
 
 Some ideas and code was taken from other projects. Credits for those go to -
 
-* torrinfail ([original dwmblocks implementation](https://github.com/torrinfail/dwmblocks))
-* Daniel Bylinka ([statuscmd patch for dwm](https://dwm.suckless.org/patches/statuscmd/))
-* Jeremy Jay ([statuscolors patch for dwm](https://dwm.suckless.org/patches/statuscolors/))
+- torrinfail ([original dwmblocks implementation](https://github.com/torrinfail/dwmblocks))
+- Daniel Bylinka ([statuscmd patch for dwm](https://dwm.suckless.org/patches/statuscmd/))
+- Jeremy Jay ([statuscolors patch for dwm](https://dwm.suckless.org/patches/statuscolors/))
 
 # See also
 
-* [dsblocks](https://github.com/ashish-yadav11/dsblocks) - A clone of this
+- [dsblocks](https://github.com/ashish-yadav11/dsblocks) - A clone of this
   project with the only difference being that C functions instead of external
   programs are used to update blocks and handle clicks.
