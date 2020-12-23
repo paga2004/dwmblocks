@@ -59,8 +59,8 @@ buttonhandler(int sig, siginfo_t *info, void *ucontext)
 
                                         close(ConnectionNumber(dpy));
                                         setsid();
-                                        execv(arg[0], arg);
-                                        perror("buttonhandler - child - execv");
+                                        execvp(arg[0], arg);
+                                        perror("buttonhandler - child - execvp");
                                         _exit(127);
                                 }
                         }
@@ -72,6 +72,52 @@ cleanup()
         unlink(LOCKFILE);
         XStoreName(dpy, DefaultRootWindow(dpy), "");
         XCloseDisplay(dpy);
+}
+
+void
+getcmd(Block *block, int sigval)
+{
+        int fd[2];
+
+        if (pipe(fd) == -1) {
+                perror("getcmd - pipe");
+                exit(1);
+        }
+        switch (fork()) {
+                case -1:
+                        perror("getcmd - fork");
+                        exit(1);
+                case 0:
+                        close(ConnectionNumber(dpy));
+                        close(fd[0]);
+                        if (fd[1] != STDOUT_FILENO) {
+                                if (dup2(fd[1], STDOUT_FILENO) != STDOUT_FILENO) {
+                                        perror("getcmd - child - dup2");
+                                        exit(1);
+                                }
+                                close(fd[1]);
+                        }
+                        if (sigval == NILL) {
+                                char *arg[] = { block->pathu, NULL };
+
+                                execvp(arg[0], arg);
+                        } else {
+                                char buf[12];
+                                char *arg[] = { block->pathu, buf, NULL };
+
+                                snprintf(buf, sizeof buf, "%d", sigval);
+                                execvp(arg[0], arg);
+                        }
+                        perror("getcmd - child - execvp");
+                        _exit(127);
+                default:
+                        close(fd[1]);
+                        if (read(fd[0], block->cmdoutcur, CMDLENGTH) == -1) {
+                                perror("getcmd - read");
+                                exit(1);
+                        }
+                        close(fd[0]);
+        }
 }
 
 void
