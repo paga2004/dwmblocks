@@ -33,7 +33,7 @@ static Block blocks[] = {
         { "memory",                     NULL,                                    5,             0},
         { "nettraf",                    NULL,                                    5,             0},
         { "clock",                      NULL,                                   30,             0},
-        { "volume",                     NULL,                                    0,             9},
+        { "volume",                     "volume",                                0,             9},
         { "internet",                   NULL,                                    0,             0},
         { "battery",                    NULL,                                   10,             0},
         { NULL } /* just to mark the end of the array */
