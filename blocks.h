@@ -30,11 +30,11 @@
 
 static Block blocks[] = {
 /*      pathu                           pathc                                   interval        signal */
-        { "memory",                     NULL,                                    5,             0},
-        { "nettraf",                    NULL,                                    5,             0},
-        { "clock",                      NULL,                                   30,             0},
+        { "memory",                     NULL,                                   10,             0},
+        { "nettraf",                    NULL,                                    1,             0},
+        { "clock",                      "clock",                                30,             8},
         { "volume",                     "volume",                                0,             9},
-        { "internet",                   NULL,                                    0,             0},
+        { "internet",                   "internet",                             30,             7},
         { "battery",                    NULL,                                   10,             0},
         { NULL } /* just to mark the end of the array */
 };
