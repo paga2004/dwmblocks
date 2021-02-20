@@ -1,3 +1,9 @@
+/* buffer size for capturing output of the programs used for updating blocks */
+#define CMDOUTLENGTH 50
+
+/* buffer size for status text */
+#define STATUSLENGTH 256
+
 /* DELIMITERENDCHAR must be less than 32.
  * At max, DELIMITERENDCHAR - 1 number of clickable blocks will be allowed.
  * Raw characters larger than DELIMITERENDCHAR and smaller than ' ' in ASCII
@@ -7,7 +13,13 @@
    defined in colors array in dwm's config.h and so on.
  * If you wish to change DELIMITERENDCHAR, don't forget to update its value in
    dwm.c and color codes in your pathu programs. */
-#define DELIMITERENDCHAR                10
+#define DELIMITERENDCHAR 10
+
+/* delimiter specified as an array of characters
+ * don't remove DELIMITERENDCHAR at the end */
+static const char delimiter[] = {'|', DELIMITERENDCHAR};
+
+#include "block.h"
 
 /* If interval of a block is set to 0, the block will only be updated once at
    startup.
@@ -21,23 +33,21 @@
    delivered first. */
 
 /* pathu - path of the program whose output is used as status text of the block
-           (output of the program should end in a null or newline character)
+           (output of the program should be a single line of text with at most
+            one newline character at the end)
  * pathc - path of the program used for handling clicks on the block */
 
 /* 1 interval = INTERVALs seconds, INTERVALn nanoseconds */
-#define INTERVALs                       1
-#define INTERVALn                       0
+#define INTERVALs 1
+#define INTERVALn 0
 
 static Block blocks[] = {
-/*      pathu                           pathc                                   interval        signal */
-        { "memory",                     NULL,                                   10,             0},
-        { "nettraf",                    NULL,                                    1,             0},
-        { "clock",                      "clock",                                30,             8},
-        { "volume",                     "volume",                                0,             9},
-        { "internet",                   "internet",                             30,             7},
-        { "battery",                    NULL,                                   10,             0},
-        { NULL } /* just to mark the end of the array */
+    /*      pathu                           pathc interval        signal */
+    {"memory", NULL, 10, 0},
+    {"nettraf", NULL, 1, 0},
+    {"clock", "clock", 30, 8},
+    {"volume", "volume", 0, 9},
+    {"internet", "internet", 30, 7},
+    {"battery", NULL, 10, 0},
+    {NULL} /* just to mark the end of the array */
 };
-
-/* default delimiter string */
-#define DELIMITER                       "|"
